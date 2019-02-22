@@ -2,9 +2,9 @@
 
 namespace Dbt\Tests;
 
+use Illuminate\Database\Schema\Blueprint;
 use Dbt\ModelFactory\ModelFactoryProvider;
 use Dbt\Tests\Fixtures\ModelFixtureFactory;
-use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
@@ -28,7 +28,7 @@ abstract class TestCase extends Orchestra
     protected function getEnvironmentSetUp ($app): void
     {
         $app['config']->set('model-factory.classes', [
-            ModelFixtureFactory::class
+            ModelFixtureFactory::class,
         ]);
         $app['config']->set('app.debug', 'true');
         $app['config']->set('database.default', 'testing');
@@ -42,7 +42,7 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders ($app): array
     {
         return [
-            ModelFactoryProvider::class
+            ModelFactoryProvider::class,
         ];
     }
 
