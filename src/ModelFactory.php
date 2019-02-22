@@ -4,10 +4,10 @@ namespace Dbt\ModelFactory;
 
 use Carbon\Carbon;
 use Faker\Generator;
-use Illuminate\Database\Eloquent\Factory;
-use Illuminate\Database\Eloquent\FactoryBuilder;
 use ReflectionClass;
 use ReflectionMethod;
+use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Database\Eloquent\FactoryBuilder;
 
 abstract class ModelFactory implements IModelFactory
 {

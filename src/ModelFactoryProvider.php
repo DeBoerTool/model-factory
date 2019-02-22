@@ -9,7 +9,7 @@ class ModelFactoryProvider extends ServiceProvider
     public function boot (): void
     {
         $this->publishes([
-            __DIR__.'/model-factory.php' => config_path('model-factory.php'),
+            __DIR__ . '/model-factory.php' => config_path('model-factory.php'),
         ]);
 
         $this->registerFactories();
