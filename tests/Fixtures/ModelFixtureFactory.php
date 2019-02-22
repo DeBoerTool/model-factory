@@ -8,6 +8,10 @@ class ModelFixtureFactory extends ModelFactory
 {
     protected $model = ModelFixture::class;
 
+    /**
+     * This is the main factory definition.
+     * @return array
+     */
     public function definition (): array
     {
         return [
@@ -15,6 +19,10 @@ class ModelFixtureFactory extends ModelFactory
         ];
     }
 
+    /**
+     * This is a factory state.
+     * @return array
+     */
     public function hasDays (): array
     {
         return [
