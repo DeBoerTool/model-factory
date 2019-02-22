@@ -1,5 +1,6 @@
 {
   "name": "dbt/model-factory",
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "Dbt\\ModelFactory\\": "src/"
