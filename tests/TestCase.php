@@ -2,10 +2,10 @@
 
 namespace Dbt\Tests;
 
-use Dbt\Tests\Fixtures\RelationFixtureFactory;
 use Illuminate\Database\Schema\Blueprint;
 use Dbt\ModelFactory\ModelFactoryProvider;
 use Dbt\Tests\Fixtures\ModelFixtureFactory;
+use Dbt\Tests\Fixtures\RelationFixtureFactory;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
