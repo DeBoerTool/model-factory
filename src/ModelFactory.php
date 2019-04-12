@@ -4,6 +4,7 @@ namespace Dbt\ModelFactory;
 
 use Carbon\Carbon;
 use Faker\Generator;
+use Illuminate\Support\Arr;
 use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Database\Eloquent\Factory;
@@ -14,7 +15,10 @@ abstract class ModelFactory implements IModelFactory
     /** @const string */
     const DEFINITION = 'definition';
 
-    /** @var \Illuminate\Database\Eloquent\Model */
+    /**
+     * @var string
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     protected $model;
 
     /** @var \Illuminate\Database\Eloquent\Factory */
@@ -69,6 +73,15 @@ abstract class ModelFactory implements IModelFactory
         return rand(0, 1) === 1 ? $yes : $no;
     }
 
+    /**
+     * @param array $items
+     * @return mixed
+     */
+    protected function oneOf (array $items)
+    {
+        return Arr::random($items);
+    }
+
     private function registerState (ReflectionMethod $method): void
     {
         $this->factory->state(
@@ -92,7 +105,8 @@ abstract class ModelFactory implements IModelFactory
 
         return array_filter(
             $reflector->getMethods(ReflectionMethod::IS_PUBLIC),
-            function (ReflectionMethod $method) {
+            function (ReflectionMethod $method): bool
+            {
                 return $method->isPublic()
                     && !in_array($method->name, $this->exclude);
             }

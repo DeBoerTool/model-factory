@@ -21,6 +21,10 @@
     <filter>
       <whitelist>
         <directory suffix=".php">./src</directory>
+
+        <exclude>
+          <file>./src/model-factory.php</file>
+        </exclude>
       </whitelist>
     </filter>
 </phpunit>

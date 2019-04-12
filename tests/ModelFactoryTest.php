@@ -3,6 +3,7 @@
 namespace Dbt\Tests;
 
 use Dbt\Tests\Fixtures\ModelFixture;
+use Dbt\Tests\Fixtures\ModelFixtureFactory;
 
 class ModelFactoryTest extends TestCase
 {
@@ -14,15 +15,21 @@ class ModelFactoryTest extends TestCase
         $model = factory($this->class)->create();
 
         $this->assertInstanceOf($this->class, $model);
-        $this->assertGreaterThan(0, strlen($model->name));
-        $this->assertNull($model->days);
+        $this->assertOneOf(ModelFixtureFactory::$maybeValues, $model->maybe);
+        $this->assertOneOf(ModelFixtureFactory::$oneOfValues, $model->one_of);
+        $this->assertNull($model->state);
     }
 
     /** @test */
-    public function making_a ()
+    public function making_a_model_with_state ()
     {
-        $model = factory($this->class)->states('hasDays')->create();
+        $model = factory($this->class)->states('hasState')->create();
 
-        $this->assertGreaterThan(0, $model->days);
+        $this->assertNotNull($model->state);
+    }
+
+    public function assertOneOf (array $possibilities, $value)
+    {
+        $this->assertContains($value, $possibilities);
     }
 }

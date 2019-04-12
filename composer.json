@@ -15,7 +15,8 @@
   "require-dev": {
     "phpunit/phpunit": "^7.0",
     "orchestra/testbench": "^3.7",
-    "composer/xdebug-handler": "^1.3"
+    "dbt/phpunit-runner": "^0.1.2",
+    "vimeo/psalm": "^3.2"
   },
   "autoload-dev": {
     "psr-4": {
@@ -23,7 +24,9 @@
     }
   },
   "scripts": {
-    "test": "php phpunit.php"
+    "test": "php ./vendor/dbt/phpunit-runner/phpunit.php --no-coverage",
+    "coverage": "phpunit --coverage-html coverage",
+    "stat": "psalm"
   },
   "extra": {
     "laravel": {

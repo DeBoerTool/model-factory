@@ -2,6 +2,7 @@
 
 namespace Dbt\Tests;
 
+use Dbt\Tests\Fixtures\RelationFixtureFactory;
 use Illuminate\Database\Schema\Blueprint;
 use Dbt\ModelFactory\ModelFactoryProvider;
 use Dbt\Tests\Fixtures\ModelFixtureFactory;
@@ -29,7 +30,9 @@ abstract class TestCase extends Orchestra
     {
         $app['config']->set('model-factory.classes', [
             ModelFixtureFactory::class,
+            RelationFixtureFactory::class,
         ]);
+
         $app['config']->set('app.debug', 'true');
         $app['config']->set('database.default', 'testing');
         $app['config']->set('database.connections.testing', [
@@ -48,10 +51,18 @@ abstract class TestCase extends Orchestra
 
     private function migrateDatabase (): void
     {
-        $this->schema->create('test_table', function (Blueprint $table) {
+        $this->schema->create('one', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('maybe');
+            $table->string('one_of');
+            $table->string('state')->nullable();
+            $table->unsignedInteger('relation_id');
+            $table->timestamps();
+        });
+
+        $this->schema->create('two', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('days')->nullable();
             $table->timestamps();
         });
     }
