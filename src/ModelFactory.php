@@ -4,9 +4,9 @@ namespace Dbt\ModelFactory;
 
 use Carbon\Carbon;
 use Faker\Generator;
-use Illuminate\Support\Arr;
 use ReflectionClass;
 use ReflectionMethod;
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Database\Eloquent\FactoryBuilder;
 
@@ -105,8 +105,7 @@ abstract class ModelFactory implements IModelFactory
 
         return array_filter(
             $reflector->getMethods(ReflectionMethod::IS_PUBLIC),
-            function (ReflectionMethod $method): bool
-            {
+            function (ReflectionMethod $method): bool {
                 return $method->isPublic()
                     && !in_array($method->name, $this->exclude);
             }
