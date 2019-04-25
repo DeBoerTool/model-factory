@@ -103,7 +103,7 @@ abstract class ModelFactory implements IModelFactory
 
     private function registerAfter (): void
     {
-        /**
+        /*
          * This error can only be triggered if no after() method has been set,
          * but we'll never get here if that's the case.
          * @psalm-suppress InvalidArgument *
