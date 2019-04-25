@@ -5,6 +5,9 @@ namespace Dbt\Tests\Fixtures;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
+/**
+ * @property string state_after
+ */
 class ModelFixture extends EloquentModel
 {
     protected $table = 'one';

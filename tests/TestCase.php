@@ -56,6 +56,7 @@ abstract class TestCase extends Orchestra
             $table->string('maybe');
             $table->string('one_of');
             $table->string('state')->nullable();
+            $table->string('state_after')->nullable();
             $table->unsignedInteger('relation_id');
             $table->timestamps();
         });

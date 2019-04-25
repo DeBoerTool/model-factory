@@ -2,6 +2,7 @@
 
 namespace Dbt\Tests\Fixtures;
 
+use Closure;
 use Dbt\ModelFactory\ModelFactory;
 
 class ModelFixtureFactory extends ModelFactory
@@ -40,6 +41,18 @@ class ModelFixtureFactory extends ModelFactory
     }
 
     /**
+     * This method will be called after creating the model.
+     * @param \Dbt\Tests\Fixtures\ModelFixture $model
+     */
+    public function after (ModelFixture $model): void
+    {
+        $relation = $this->factory(RelationFixture::class)->create();
+
+        $model->relation()->associate($relation->id);
+        $model->save();
+    }
+
+    /**
      * This is a factory state.
      * @return array
      */
@@ -48,5 +61,27 @@ class ModelFixtureFactory extends ModelFactory
         return [
             'state' => $this->faker->word,
         ];
+    }
+
+    /**
+     * This method will be called after creating the model with state.
+     * @param \Dbt\Tests\Fixtures\ModelFixture $model
+     */
+    public function afterHasState (ModelFixture $model): void
+    {
+        $model->state_after = $this->faker->word;
+        $model->save();
+    }
+
+    /**
+     * State callbacks can be used without an accompanying factory state. This
+     * callback will be called regardless of the fact that there's no
+     * `hasMoreState` method.
+     * @param \Dbt\Tests\Fixtures\ModelFixture $model
+     */
+    public function afterHasMoreState (ModelFixture $model): void
+    {
+        $model->state_after = $this->faker->word;
+        $model->save();
     }
 }

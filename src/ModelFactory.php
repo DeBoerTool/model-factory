@@ -4,6 +4,7 @@ namespace Dbt\ModelFactory;
 
 use Carbon\Carbon;
 use Faker\Generator;
+use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Arr;
@@ -14,6 +15,9 @@ abstract class ModelFactory implements IModelFactory
 {
     /** @const string */
     const DEFINITION = 'definition';
+
+    /** @const string */
+    const AFTER = 'after';
 
     /**
      * @var string
@@ -49,12 +53,19 @@ abstract class ModelFactory implements IModelFactory
     public function register (): void
     {
         foreach ($this->methods() as $method) {
-            if ($method->name === self::DEFINITION) {
-                $this->registerBaseDefinition();
-                continue;
+            switch (true) {
+                case $method->name === self::DEFINITION:
+                    $this->registerDefinition();
+                    break;
+                case $method->name === self::AFTER:
+                    $this->registerAfter();
+                    break;
+                case Str::contains($method->name, self::AFTER):
+                    $this->registerAfterState($method);
+                    break;
+                default:
+                    $this->registerState($method);
             }
-
-            $this->registerState($method);
         }
     }
 
@@ -82,6 +93,22 @@ abstract class ModelFactory implements IModelFactory
         return Arr::random($items);
     }
 
+    private function registerDefinition (): void
+    {
+        $this->factory->define(
+            $this->model,
+            [$this, self::DEFINITION]
+        );
+    }
+
+    private function registerAfter ()
+    {
+        $this->factory->afterCreating(
+            $this->model,
+            [$this, self::AFTER]
+        );
+    }
+
     private function registerState (ReflectionMethod $method): void
     {
         $this->factory->state(
@@ -91,11 +118,16 @@ abstract class ModelFactory implements IModelFactory
         );
     }
 
-    private function registerBaseDefinition (): void
+    private function registerAfterState (ReflectionMethod $method)
     {
-        $this->factory->define(
+        $state = Str::camel(
+            str_replace(self::AFTER, '', $method->name)
+        );
+
+        $this->factory->afterCreatingState(
             $this->model,
-            [$this, self::DEFINITION]
+            $state,
+            [$this, $method->name]
         );
     }
 
