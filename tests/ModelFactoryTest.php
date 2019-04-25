@@ -2,10 +2,10 @@
 
 namespace Dbt\Tests;
 
+use InvalidArgumentException;
 use Dbt\Tests\Fixtures\ModelFixture;
 use Dbt\Tests\Fixtures\RelationFixture;
 use Dbt\Tests\Fixtures\ModelFixtureFactory;
-use InvalidArgumentException;
 
 class ModelFactoryTest extends TestCase
 {
