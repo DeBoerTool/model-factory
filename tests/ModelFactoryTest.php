@@ -2,6 +2,7 @@
 
 namespace Dbt\Tests;
 
+use InvalidArgumentException;
 use Dbt\Tests\Fixtures\ModelFixture;
 use Dbt\Tests\Fixtures\RelationFixture;
 use Dbt\Tests\Fixtures\ModelFixtureFactory;
@@ -38,6 +39,14 @@ class ModelFactoryTest extends TestCase
 
         $this->assertNull($model->state);
         $this->assertNotNull($model->state_after);
+    }
+
+    /** @test */
+    public function failing_to_create_a_model_with_nonexistent_state ()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        factory($this->class)->states('thisShouldFail')->create();
     }
 
     public function assertOneOf (array $possibilities, $value)

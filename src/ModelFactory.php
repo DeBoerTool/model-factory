@@ -50,13 +50,6 @@ abstract class ModelFactory implements IModelFactory
 
     abstract public function definition (): array;
 
-    /**
-     * @param \Illuminate\Database\Eloquent\Model $model
-     */
-    public function after ($model): void
-    {
-    }
-
     public function register (): void
     {
         foreach ($this->methods() as $method) {
@@ -110,6 +103,11 @@ abstract class ModelFactory implements IModelFactory
 
     private function registerAfter (): void
     {
+        /**
+         * This error can only be triggered if no after() method has been set,
+         * but we'll never get here if that's the case.
+         * @psalm-suppress InvalidArgument *
+         */
         $this->factory->afterCreating(
             $this->model,
             [$this, self::AFTER]
