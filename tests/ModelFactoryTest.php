@@ -3,8 +3,8 @@
 namespace Dbt\Tests;
 
 use Dbt\Tests\Fixtures\ModelFixture;
-use Dbt\Tests\Fixtures\ModelFixtureFactory;
 use Dbt\Tests\Fixtures\RelationFixture;
+use Dbt\Tests\Fixtures\ModelFixtureFactory;
 
 class ModelFactoryTest extends TestCase
 {

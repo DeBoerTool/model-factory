@@ -2,7 +2,6 @@
 
 namespace Dbt\Tests\Fixtures;
 
-use Closure;
 use Dbt\ModelFactory\ModelFactory;
 
 class ModelFixtureFactory extends ModelFactory
