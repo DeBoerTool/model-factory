@@ -36,6 +36,8 @@ class ModelFixtureFactory extends ModelFactory
             // Choose one of many values randomly.
             'one_of' => $this->oneOf(self::$oneOfValues),
             'relation_id' => $model->id,
+            'state' => null,
+            'state_after' => null,
         ];
     }
 
