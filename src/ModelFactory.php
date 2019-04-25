@@ -48,7 +48,13 @@ abstract class ModelFactory implements IModelFactory
         $this->carbon = $carbon;
     }
 
-    abstract public function definition () : array;
+    abstract public function definition (): array;
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     */
+    public function after ($model): void
+    {}
 
     public function register (): void
     {
@@ -101,7 +107,7 @@ abstract class ModelFactory implements IModelFactory
         );
     }
 
-    private function registerAfter ()
+    private function registerAfter (): void
     {
         $this->factory->afterCreating(
             $this->model,
@@ -118,7 +124,7 @@ abstract class ModelFactory implements IModelFactory
         );
     }
 
-    private function registerAfterState (ReflectionMethod $method)
+    private function registerAfterState (ReflectionMethod $method): void
     {
         $state = Str::camel(
             str_replace(self::AFTER, '', $method->name)
