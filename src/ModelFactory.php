@@ -54,7 +54,8 @@ abstract class ModelFactory implements IModelFactory
      * @param \Illuminate\Database\Eloquent\Model $model
      */
     public function after ($model): void
-    {}
+    {
+    }
 
     public function register (): void
     {
