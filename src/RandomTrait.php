@@ -2,8 +2,8 @@
 
 namespace Dbt\ModelFactory;
 
-use Faker\Provider\Base as Faker;
 use Illuminate\Support\Str;
+use Faker\Provider\Base as Faker;
 
 /**
  * @mixin \Dbt\ModelFactory\ModelFactory
@@ -24,8 +24,7 @@ trait RandomTrait
         int $min,
         int $max,
         int $maxDecimals = null
-    ): float
-    {
+    ): float {
         return Faker::randomFloat($maxDecimals, $min, $max);
     }
 }
