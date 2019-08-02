@@ -47,10 +47,9 @@ class ModelFixtureFactory extends ModelFactory
      */
     public function after (ModelFixture $model): void
     {
-        $relation = $this->factory(RelationFixture::class)->create();
+        $relation = $this->createOne(RelationFixture::class);
 
-        $model->relation()->associate($relation->id);
-        $model->save();
+        $model->relation()->associate($relation)->save();
     }
 
     /**
@@ -61,6 +60,27 @@ class ModelFixtureFactory extends ModelFactory
     {
         return [
             'state' => $this->faker->word,
+        ];
+    }
+
+    public function hasRandomStringState (): array
+    {
+        return [
+            'state' => $this->rs(16),
+        ];
+    }
+
+    public function hasRandomIntState (): array
+    {
+        return [
+            'state' => $this->ri(1, 1000),
+        ];
+    }
+
+    public function hasRandomFloatState (): array
+    {
+        return [
+            'state' => $this->rf(1, 1000),
         ];
     }
 

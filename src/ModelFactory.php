@@ -4,6 +4,7 @@ namespace Dbt\ModelFactory;
 
 use Carbon\Carbon;
 use Faker\Generator;
+use Illuminate\Database\Eloquent\Model;
 use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Arr;
@@ -13,17 +14,16 @@ use Illuminate\Database\Eloquent\FactoryBuilder;
 
 abstract class ModelFactory implements IModelFactory
 {
+    use RandomTrait;
+
     /** @const string */
     const DEFINITION = 'definition';
 
     /** @const string */
     const AFTER = 'after';
 
-    /**
-     * @var string
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    protected $model;
+    /** @var string */
+    protected $model = 'You should override this value.';
 
     /** @var \Illuminate\Database\Eloquent\Factory */
     protected $factory;
@@ -69,9 +69,14 @@ abstract class ModelFactory implements IModelFactory
         }
     }
 
-    protected function factory (string $model) : FactoryBuilder
+    protected function factory (string $model): FactoryBuilder
     {
         return $this->factory->of($model);
+    }
+
+    protected function createOne (string $model, array $attributes = []): Model
+    {
+        return $this->factory($model)->create($attributes);
     }
 
     /**
