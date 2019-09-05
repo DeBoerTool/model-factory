@@ -2,13 +2,13 @@
 
 namespace Dbt\Tests;
 
-use Illuminate\Database\Schema\Blueprint;
 use Dbt\ModelFactory\ModelFactoryProvider;
 use Dbt\Tests\Fixtures\ModelFixtureFactory;
 use Dbt\Tests\Fixtures\RelationFixtureFactory;
-use Orchestra\Testbench\TestCase as Orchestra;
+use Illuminate\Database\Schema\Blueprint;
+use Orchestra\Testbench\TestCase;
 
-abstract class TestCase extends Orchestra
+abstract class IntegrationTestCase extends TestCase
 {
     /** @var \Illuminate\Database\Schema\Builder */
     private $schema;

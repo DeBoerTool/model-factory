@@ -1,20 +1,29 @@
 <?php
 
+/** @noinspection PhpIncompatibleReturnTypeInspection */
+
 namespace Dbt\Tests;
 
-use InvalidArgumentException;
-use Dbt\Tests\Fixtures\ModelFixture;
-use Dbt\Tests\Fixtures\RelationFixture;
+use Dbt\ModelFactory\Create;
+use Dbt\ModelFactory\Params\Count;
+use Dbt\ModelFactory\Params\Overrides;
+use Dbt\ModelFactory\Params\States;
+use Dbt\Tests\Fixtures\ModelFixture as Fixture;
 use Dbt\Tests\Fixtures\ModelFixtureFactory;
+use Dbt\Tests\Fixtures\RelationFixture;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
 
-class ModelFactoryTest extends TestCase
+class ModelFactoryTest extends IntegrationTestCase
 {
-    private $class = ModelFixture::class;
+    private $class = Fixture::class;
 
     /** @test */
     public function creating_a_model ()
     {
-        $model = factory($this->class)->create();
+        /** @var Fixture $model */
+        $model = Create::a(new Fixture());
 
         $this->assertInstanceOf($this->class, $model);
         $this->assertOneOf(ModelFixtureFactory::$maybeValues, $model->maybe);
@@ -26,7 +35,8 @@ class ModelFactoryTest extends TestCase
     /** @test */
     public function creating_a_model_with_state ()
     {
-        $model = factory($this->class)->states('hasState')->create();
+        /** @var Fixture $model */
+        $model = Create::a(new Fixture(), States::has('state'));
 
         $this->assertNotNull($model->state);
         $this->assertNotNull($model->state_after);
@@ -35,13 +45,12 @@ class ModelFactoryTest extends TestCase
     /** @test */
     public function creating_a_model_with_a_random_string ()
     {
-        $model1 = factory($this->class)
-            ->states('hasRandomStringState')
-            ->create();
+        $make = function (): Fixture {
+            return Create::a(new Fixture(), States::has('randomStringState'));
+        };
 
-        $model2 = factory($this->class)
-            ->states('hasRandomStringState')
-            ->create();
+        $model1 = $make();
+        $model2 = $make();
 
         // Since the underlying rs() method delegates to Str::random() and that
         // is well-tested, we don't actually test the randomness of it here.
@@ -53,13 +62,12 @@ class ModelFactoryTest extends TestCase
     /** @test */
     public function creating_a_model_with_a_random_int ()
     {
-        $model1 = factory($this->class)
-            ->states('hasRandomIntState')
-            ->create();
+        $make = function (): Fixture {
+            return Create::a(new Fixture(), States::has('randomIntState'));
+        };
 
-        $model2 = factory($this->class)
-            ->states('hasRandomIntState')
-            ->create();
+        $model1 = $make();
+        $model2 = $make();
 
         // Since the underlying ri() method delegates to rand(), we don't
         // actually test randomness.
@@ -71,13 +79,12 @@ class ModelFactoryTest extends TestCase
     /** @test */
     public function creating_a_model_with_a_random_float ()
     {
-        $model1 = factory($this->class)
-            ->states('hasRandomFloatState')
-            ->create();
+        $make = function (): Fixture {
+            return Create::a(new Fixture(), States::has('randomFloatState'));
+        };
 
-        $model2 = factory($this->class)
-            ->states('hasRandomFloatState')
-            ->create();
+        $model1 = $make();
+        $model2 = $make();
 
         // Since the underlying rf() method delegates to Faker and that is well-
         // tested, we don't actually test randomness here.
@@ -89,7 +96,8 @@ class ModelFactoryTest extends TestCase
     /** @test */
     public function creating_a_model_with_state_callback ()
     {
-        $model = factory($this->class)->states('hasMoreState')->create();
+        /** @var Fixture $model */
+        $model = Create::a(new Fixture(), States::has('moreState'));
 
         $this->assertNull($model->state);
         $this->assertNotNull($model->state_after);
@@ -100,7 +108,50 @@ class ModelFactoryTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        factory($this->class)->states('thisShouldFail')->create();
+        Create::a(new Fixture(), new States('shouldFail'));
+    }
+
+    /** @test */
+    public function creating_a_model_or_a_collection_of_models (): void
+    {
+        $model = Create::a(new Fixture(), Count::of(1));
+
+        $this->assertInstanceOf(Fixture::class, $model);
+
+        $collection = Create::a(new Fixture(), Count::of(2));
+
+        $this->assertInstanceOf(Collection::class, $collection);
+        $this->assertCount(2, $collection);
+    }
+
+    /** @test */
+    public function creating_a_model_with_overrides (): void
+    {
+        $expected = Str::random(16);
+
+        /** @var Fixture $model */
+        $model = Create::a(new Fixture(), Overrides::of(['maybe' => $expected]));
+
+        $this->assertSame($model->maybe, $expected);
+    }
+
+    /** @test */
+    public function creating_with_all_three_params (): void
+    {
+        $override = Str::random(16);
+        $count = 5;
+
+        $created = Create::a(
+            new Fixture(),
+            Count::of($count),
+            States::of('hasState'),
+            Overrides::of(['maybe' => $override])
+        );
+
+        $this->assertCount($count, $created);
+        $this->assertSame($created->first()->maybe, $override);
+        $this->assertNotNull($created->first()->state);
+        $this->assertNotNull($created->first()->state_after);
     }
 
     public function assertOneOf (array $possibilities, $value)

@@ -25,7 +25,7 @@
   "scripts": {
     "test": "php ./vendor/dbt/phpunit-runner/phpunit.php --no-coverage",
     "coverage": "phpunit --coverage-html coverage",
-    "pcov": "php -d pcov.enabled=1 vendor/phpunit/phpunit/phpunit --coverage-text --coverage-html coverage",
+    "pcov": "php -d pcov.enabled=1 vendor/phpunit/phpunit/phpunit --coverage-html reports/coverage",
     "stat": "psalm"
   },
   "extra": {

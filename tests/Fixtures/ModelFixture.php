@@ -2,13 +2,17 @@
 
 namespace Dbt\Tests\Fixtures;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 /**
  * @property string state_after
+ * @property mixed maybe
+ * @property mixed one_of
+ * @property mixed state
+ * @property mixed relation
  */
-class ModelFixture extends EloquentModel
+class ModelFixture extends Model
 {
     protected $table = 'one';
 
