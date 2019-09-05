@@ -2,8 +2,6 @@
 
 namespace Dbt\ModelFactory\Params;
 
-use Illuminate\Support\Str;
-
 class States implements Param
 {
     /** @var string[] */
@@ -21,9 +19,12 @@ class States implements Param
 
     public static function has (string ...$states): self
     {
-        $mutated = array_map(function (string $state) {
+        $mapper = function (string $state): string
+        {
             return sprintf('has%s', ucfirst($state));
-        }, $states);
+        };
+
+        $mutated = array_map($mapper, $states);
 
         return self::of(...$mutated);
     }

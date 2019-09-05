@@ -29,13 +29,18 @@ class Create
         $states = self::parseParams(new States(), $params);
         $modelClass = get_class($model);
 
+        /**
+         * There's no great way to annotate what self::parseParams(...) is
+         * actually doing to let's just suppress these errors.
+         * @psalm-suppress PossiblyInvalidArgument
+         */
         return $factory->of($modelClass)
             ->states($states->get())
             ->times($count->get())
             ->create($overrides->get());
     }
 
-    private static function parseParams (Param $default, array $args)
+    private static function parseParams (Param $default, array $args): Param
     {
         $class = get_class($default);
 
