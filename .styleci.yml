@@ -10,4 +10,5 @@ disabled:
   - not_operator_with_successor_space
   - phpdoc_to_comment
   - length_ordered_imports
+  - simplified_null_return
 
