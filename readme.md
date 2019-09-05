@@ -28,7 +28,7 @@ Run:
 composer test
 ```
 
-## Usage
+## Configuring
 
 Publish the `model-factory.php` configuration file with `php artisan vendor:publish` command, or copy the file from this repository. The service provider should be auto-discovered by Laravel.
 
@@ -53,6 +53,15 @@ class MyModelFactory extends ModelFactory
     }
 
     /**
+     * This will happen after the model is created.
+     * @return void
+     */
+    public function after (MyModel $model): void
+    {
+        // Do some stuff to the model.
+    }
+
+    /**
      * This is a factory state.
      * @return array
      */
@@ -62,6 +71,15 @@ class MyModelFactory extends ModelFactory
             'my_int_column' => rand(1, 10),
         ];
     }
+
+     /**
+      * This will happen after the model is created in the given state.
+      * @return void
+      */
+     public function afterMyState (MyModel $model): void
+     {
+         // Do some stuff to the model.
+     }
 }
 ```
 
@@ -74,16 +92,42 @@ To register your model factory, include it in the config file:
 ];
 ```
 
-Then you can use it as usual:
+## Usage
+
+### With the `factory(...)` function
+
+Your model factories will be registered with Laravel as usual, so they can be called with Laravel's global `factory()` function:
 
 ```php
 // Factory without state.
-$base = factory(MyModel::class)->create();
+$model = factory(MyModel::class)->create();
 
 // Factory with state.
-$state = factory(MyModel::class)->states('myState')->create();
+$modelWithState = factory(MyModel::class)->states('myState')->create();
 ```
 
-### License
+### With the `Create` class
+
+If you prefer a slightly more expressive way to create models for testing, try out the `Create` class:
+
+```php
+$model = Create::a(new MyModel, new Count(10), new States('myState'), new Overrides(['column' => 'value'])); 
+```
+
+The method definition requires a model followed by variadic `Param`s, in any order, and in any combination.
+
+```php
+// Create a model with defaults.
+$model = Create::a(new MyModel);
+
+// The following are all equivalent:
+Create::a(new MyModel, new Count(...), new States(...), new Overrides(...));
+Create::a(new MyModel, new States(...), new Count(...), new Overrides(...));
+Create::a(new MyModel, new States(...), new Overrides(...), new Count(...));
+
+// Etc.
+``` 
+
+## License
 
 MIT. Do as you wish.
