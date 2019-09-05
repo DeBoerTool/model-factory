@@ -19,8 +19,7 @@ class States implements Param
 
     public static function has (string ...$states): self
     {
-        $mapper = function (string $state): string
-        {
+        $mapper = function (string $state): string {
             return sprintf('has%s', ucfirst($state));
         };
 

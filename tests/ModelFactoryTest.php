@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpIncompatibleReturnTypeInspection */
+<?php
+
+/** @noinspection PhpIncompatibleReturnTypeInspection */
 
 namespace Dbt\Tests;
 
@@ -6,12 +8,12 @@ use Dbt\ModelFactory\Create;
 use Dbt\ModelFactory\Params\Count;
 use Dbt\ModelFactory\Params\Overrides;
 use Dbt\ModelFactory\Params\States;
+use Dbt\Tests\Fixtures\ModelFixture as Fixture;
+use Dbt\Tests\Fixtures\ModelFixtureFactory;
+use Dbt\Tests\Fixtures\RelationFixture;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Dbt\Tests\Fixtures\ModelFixture as Fixture;
-use Dbt\Tests\Fixtures\RelationFixture;
-use Dbt\Tests\Fixtures\ModelFixtureFactory;
 
 class ModelFactoryTest extends IntegrationTestCase
 {
@@ -43,8 +45,7 @@ class ModelFactoryTest extends IntegrationTestCase
     /** @test */
     public function creating_a_model_with_a_random_string ()
     {
-        $make = function (): Fixture
-        {
+        $make = function (): Fixture {
             return Create::a(new Fixture(), States::has('randomStringState'));
         };
 
@@ -61,8 +62,7 @@ class ModelFactoryTest extends IntegrationTestCase
     /** @test */
     public function creating_a_model_with_a_random_int ()
     {
-        $make = function (): Fixture
-        {
+        $make = function (): Fixture {
             return Create::a(new Fixture(), States::has('randomIntState'));
         };
 
@@ -79,8 +79,7 @@ class ModelFactoryTest extends IntegrationTestCase
     /** @test */
     public function creating_a_model_with_a_random_float ()
     {
-        $make = function (): Fixture
-        {
+        $make = function (): Fixture {
             return Create::a(new Fixture(), States::has('randomFloatState'));
         };
 
