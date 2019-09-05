@@ -2,8 +2,8 @@
 
 namespace Dbt\Tests\Fixtures;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RelationFixture extends EloquentModel
 {

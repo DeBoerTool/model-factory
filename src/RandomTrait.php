@@ -2,8 +2,8 @@
 
 namespace Dbt\ModelFactory;
 
-use Illuminate\Support\Str;
 use Faker\Provider\Base as Faker;
+use Illuminate\Support\Str;
 
 /**
  * @mixin \Dbt\ModelFactory\ModelFactory
