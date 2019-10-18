@@ -12,6 +12,7 @@ use Dbt\Tests\Fixtures\ModelFixture as Fixture;
 use Dbt\Tests\Fixtures\ModelFixtureFactory;
 use Dbt\Tests\Fixtures\RelationFixture;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
@@ -30,6 +31,18 @@ class ModelFactoryTest extends IntegrationTestCase
         $this->assertOneOf(ModelFixtureFactory::$oneOfValues, $model->one_of);
         $this->assertNull($model->state);
         $this->assertInstanceOf(RelationFixture::class, $model->relation);
+    }
+
+    /** @test */
+    public function creating_some_models (): void
+    {
+        $models = Create::some(new Fixture(), Count::rand());
+
+        $this->assertGreaterThan(1, $models->count());
+
+        $models->each(function (Model $model) {
+            $this->assertInstanceOf(Fixture::class, $model);
+        });
     }
 
     /** @test */

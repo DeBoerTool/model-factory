@@ -40,6 +40,16 @@ class Create
             ->create($overrides->get());
     }
 
+    /**
+     * This is essentially the same as Create::a(...) but with slightly
+     * different semantics.
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection
+     */
+    public static function some (Model $model, Count $count, Param ...$params)
+    {
+        return self::a($model, $count, ...$params);
+    }
+
     private static function parseParams (Param $default, array $args): Param
     {
         $class = get_class($default);

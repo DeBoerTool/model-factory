@@ -17,6 +17,13 @@ class Count implements Param
         return new self($howMany);
     }
 
+    public static function rand (int $min = 2, int $max = 9): self
+    {
+        return new self(
+            rand($min, $max)
+        );
+    }
+
     /**
      * Laravel's EloquentFactory will return a Collection if you request any
      * number of models, even if that number is 1. Providing it will null
