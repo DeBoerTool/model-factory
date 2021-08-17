@@ -10,7 +10,7 @@
     "php" : ">=7.2.5",
     "illuminate/support": "^7.0",
     "illuminate/database": "^7.0",
-    "fzaninotto/faker": "^1.9"
+    "fakerphp/faker": "^1.9"
   },
   "require-dev": {
     "orchestra/testbench": "^5.0",
