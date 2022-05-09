@@ -80,8 +80,8 @@ abstract class ModelFactory implements IModelFactory
     }
 
     /**
-     * @param mixed $yes
-     * @param mixed $no
+     * @param  mixed  $yes
+     * @param  mixed  $no
      * @return mixed
      */
     protected function maybe ($yes, $no = null)
@@ -90,7 +90,7 @@ abstract class ModelFactory implements IModelFactory
     }
 
     /**
-     * @param array $items
+     * @param  array  $items
      * @return mixed
      */
     protected function oneOf (array $items)
@@ -111,6 +111,7 @@ abstract class ModelFactory implements IModelFactory
         /**
          * This error can only be triggered if no after() method has been set,
          * but we'll never get here if that's the case.
+         *
          * @psalm-suppress InvalidArgument *
          */
         $this->factory->afterCreating(
