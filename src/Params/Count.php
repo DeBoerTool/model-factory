@@ -28,6 +28,7 @@ class Count implements Param
      * Laravel's EloquentFactory will return a Collection if you request any
      * number of models, even if that number is 1. Providing it will null
      * instead will prevent this behaviour.
+     *
      * @return int|null
      */
     public function get ()
