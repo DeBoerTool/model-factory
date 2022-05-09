@@ -32,6 +32,7 @@ class Create
         /**
          * There's no great way to annotate what self::parseParams(...) is
          * actually doing to let's just suppress these errors.
+         *
          * @psalm-suppress PossiblyInvalidArgument
          */
         return $factory->of($modelClass)
@@ -43,6 +44,7 @@ class Create
     /**
      * This is essentially the same as Create::a(...) but with slightly
      * different semantics.
+     *
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection
      */
     public static function some (Model $model, Count $count, Param ...$params)

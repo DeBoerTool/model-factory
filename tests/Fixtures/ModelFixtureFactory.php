@@ -23,6 +23,7 @@ class ModelFixtureFactory extends ModelFactory
 
     /**
      * This is the main factory definition.
+     *
      * @return array
      */
     public function definition (): array
@@ -43,7 +44,8 @@ class ModelFixtureFactory extends ModelFactory
 
     /**
      * This method will be called after creating the model.
-     * @param \Dbt\Tests\Fixtures\ModelFixture $model
+     *
+     * @param  \Dbt\Tests\Fixtures\ModelFixture  $model
      */
     public function after (ModelFixture $model): void
     {
@@ -54,6 +56,7 @@ class ModelFixtureFactory extends ModelFactory
 
     /**
      * This is a factory state.
+     *
      * @return array
      */
     public function hasState (): array
@@ -86,7 +89,8 @@ class ModelFixtureFactory extends ModelFactory
 
     /**
      * This method will be called after creating the model with state.
-     * @param \Dbt\Tests\Fixtures\ModelFixture $model
+     *
+     * @param  \Dbt\Tests\Fixtures\ModelFixture  $model
      */
     public function afterHasState (ModelFixture $model): void
     {
@@ -98,7 +102,8 @@ class ModelFixtureFactory extends ModelFactory
      * State callbacks can be used without an accompanying factory state. This
      * callback will be called regardless of the fact that there's no
      * `hasMoreState` method.
-     * @param \Dbt\Tests\Fixtures\ModelFixture $model
+     *
+     * @param  \Dbt\Tests\Fixtures\ModelFixture  $model
      */
     public function afterHasMoreState (ModelFixture $model): void
     {
