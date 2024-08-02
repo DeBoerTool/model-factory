@@ -16,7 +16,9 @@
   "require-dev": {
     "orchestra/testbench": "^8.0",
     "phpunit/phpunit": "^9.5",
-    "vimeo/psalm": "^4.0"
+    "vimeo/psalm": "^4.0",
+    "rector/rector": "^1.2",
+    "laravel/pint": "^1.17"
   },
   "autoload-dev": {
     "psr-4": {
@@ -27,7 +29,8 @@
     "test": "phpunit --no-coverage",
     "coverage": "phpunit --coverage-html coverage",
     "pcov": "php -d pcov.enabled=1 vendor/phpunit/phpunit/phpunit --coverage-html reports/coverage",
-    "stat": "psalm"
+    "stat": "psalm",
+    "pint": "pint"
   },
   "extra": {
     "laravel": {

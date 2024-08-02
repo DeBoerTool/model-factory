@@ -19,14 +19,14 @@ class Create
     /**
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection
      */
-    public static function a (Model $model, Param ...$params)
+    public static function a(Model $model, Param ...$params)
     {
         /** @var EloquentFactory $factory */
         $factory = app(EloquentFactory::class);
 
-        $count = self::parseParams(new Count(), $params);
-        $overrides = self::parseParams(new Overrides(), $params);
-        $states = self::parseParams(new States(), $params);
+        $count = self::parseParams(new Count, $params);
+        $overrides = self::parseParams(new Overrides, $params);
+        $states = self::parseParams(new States, $params);
         $modelClass = get_class($model);
 
         /**
@@ -47,12 +47,12 @@ class Create
      *
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection
      */
-    public static function some (Model $model, Count $count, Param ...$params)
+    public static function some(Model $model, Count $count, Param ...$params)
     {
         return self::a($model, $count, ...$params);
     }
 
-    private static function parseParams (Param $default, array $args): Param
+    private static function parseParams(Param $default, array $args): Param
     {
         $class = get_class($default);
 

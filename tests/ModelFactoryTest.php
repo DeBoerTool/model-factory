@@ -21,10 +21,10 @@ class ModelFactoryTest extends IntegrationTestCase
     private $class = Fixture::class;
 
     /** @test */
-    public function creating_a_model ()
+    public function creating_a_model()
     {
         /** @var Fixture $model */
-        $model = Create::a(new Fixture());
+        $model = Create::a(new Fixture);
 
         $this->assertInstanceOf($this->class, $model);
         $this->assertOneOf(ModelFixtureFactory::$maybeValues, $model->maybe);
@@ -34,9 +34,9 @@ class ModelFactoryTest extends IntegrationTestCase
     }
 
     /** @test */
-    public function creating_some_models (): void
+    public function creating_some_models(): void
     {
-        $models = Create::some(new Fixture(), Count::rand());
+        $models = Create::some(new Fixture, Count::rand());
 
         $this->assertGreaterThan(1, $models->count());
 
@@ -46,20 +46,20 @@ class ModelFactoryTest extends IntegrationTestCase
     }
 
     /** @test */
-    public function creating_a_model_with_state ()
+    public function creating_a_model_with_state()
     {
         /** @var Fixture $model */
-        $model = Create::a(new Fixture(), States::has('state'));
+        $model = Create::a(new Fixture, States::has('state'));
 
         $this->assertNotNull($model->state);
         $this->assertNotNull($model->state_after);
     }
 
     /** @test */
-    public function creating_a_model_with_a_random_string ()
+    public function creating_a_model_with_a_random_string()
     {
         $make = function (): Fixture {
-            return Create::a(new Fixture(), States::has('randomStringState'));
+            return Create::a(new Fixture, States::has('randomStringState'));
         };
 
         $model1 = $make();
@@ -73,10 +73,10 @@ class ModelFactoryTest extends IntegrationTestCase
     }
 
     /** @test */
-    public function creating_a_model_with_a_random_int ()
+    public function creating_a_model_with_a_random_int()
     {
         $make = function (): Fixture {
-            return Create::a(new Fixture(), States::has('randomIntState'));
+            return Create::a(new Fixture, States::has('randomIntState'));
         };
 
         $model1 = $make();
@@ -90,10 +90,10 @@ class ModelFactoryTest extends IntegrationTestCase
     }
 
     /** @test */
-    public function creating_a_model_with_a_random_float ()
+    public function creating_a_model_with_a_random_float()
     {
         $make = function (): Fixture {
-            return Create::a(new Fixture(), States::has('randomFloatState'));
+            return Create::a(new Fixture, States::has('randomFloatState'));
         };
 
         $model1 = $make();
@@ -107,55 +107,55 @@ class ModelFactoryTest extends IntegrationTestCase
     }
 
     /** @test */
-    public function creating_a_model_with_state_callback ()
+    public function creating_a_model_with_state_callback()
     {
         /** @var Fixture $model */
-        $model = Create::a(new Fixture(), States::has('moreState'));
+        $model = Create::a(new Fixture, States::has('moreState'));
 
         $this->assertNull($model->state);
         $this->assertNotNull($model->state_after);
     }
 
     /** @test */
-    public function failing_to_create_a_model_with_nonexistent_state ()
+    public function failing_to_create_a_model_with_nonexistent_state()
     {
         $this->expectException(InvalidArgumentException::class);
 
-        Create::a(new Fixture(), new States('shouldFail'));
+        Create::a(new Fixture, new States('shouldFail'));
     }
 
     /** @test */
-    public function creating_a_model_or_a_collection_of_models (): void
+    public function creating_a_model_or_a_collection_of_models(): void
     {
-        $model = Create::a(new Fixture(), Count::of(1));
+        $model = Create::a(new Fixture, Count::of(1));
 
         $this->assertInstanceOf(Fixture::class, $model);
 
-        $collection = Create::a(new Fixture(), Count::of(2));
+        $collection = Create::a(new Fixture, Count::of(2));
 
         $this->assertInstanceOf(Collection::class, $collection);
         $this->assertCount(2, $collection);
     }
 
     /** @test */
-    public function creating_a_model_with_overrides (): void
+    public function creating_a_model_with_overrides(): void
     {
         $expected = Str::random(16);
 
         /** @var Fixture $model */
-        $model = Create::a(new Fixture(), Overrides::of(['maybe' => $expected]));
+        $model = Create::a(new Fixture, Overrides::of(['maybe' => $expected]));
 
         $this->assertSame($model->maybe, $expected);
     }
 
     /** @test */
-    public function creating_with_all_three_params (): void
+    public function creating_with_all_three_params(): void
     {
         $override = Str::random(16);
         $count = 5;
 
         $created = Create::a(
-            new Fixture(),
+            new Fixture,
             Count::of($count),
             States::of('hasState'),
             Overrides::of(['maybe' => $override])
@@ -167,7 +167,7 @@ class ModelFactoryTest extends IntegrationTestCase
         $this->assertNotNull($created->first()->state_after);
     }
 
-    public function assertOneOf (array $possibilities, $value)
+    public function assertOneOf(array $possibilities, $value)
     {
         $this->assertContains($value, $possibilities);
     }

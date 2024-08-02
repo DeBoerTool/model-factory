@@ -41,16 +41,16 @@ abstract class ModelFactory implements IModelFactory
     /** @var \Carbon\Carbon */
     protected $carbon;
 
-    public function __construct (Factory $factory, Generator $faker, Carbon $carbon)
+    public function __construct(Factory $factory, Generator $faker, Carbon $carbon)
     {
         $this->factory = $factory;
         $this->faker = $faker;
         $this->carbon = $carbon;
     }
 
-    abstract public function definition (): array;
+    abstract public function definition(): array;
 
-    public function register (): void
+    public function register(): void
     {
         foreach ($this->methods() as $method) {
             switch (true) {
@@ -69,36 +69,35 @@ abstract class ModelFactory implements IModelFactory
         }
     }
 
-    protected function factory (string $model): FactoryBuilder
+    protected function factory(string $model): FactoryBuilder
     {
         return $this->factory->of($model);
     }
 
-    protected function createOne (string $model, array $attributes = []): Model
+    protected function createOne(string $model, array $attributes = []): Model
     {
         return $this->factory($model)->create($attributes);
     }
 
     /**
-     * @param  mixed  $yes
-     * @param  mixed  $no
+     * @param mixed $yes
+     * @param mixed $no
      * @return mixed
      */
-    protected function maybe ($yes, $no = null)
+    protected function maybe($yes, $no = null)
     {
         return rand(0, 1) === 1 ? $yes : $no;
     }
 
     /**
-     * @param  array  $items
      * @return mixed
      */
-    protected function oneOf (array $items)
+    protected function oneOf(array $items)
     {
         return Arr::random($items);
     }
 
-    private function registerDefinition (): void
+    private function registerDefinition(): void
     {
         $this->factory->define(
             $this->model,
@@ -106,7 +105,7 @@ abstract class ModelFactory implements IModelFactory
         );
     }
 
-    private function registerAfter (): void
+    private function registerAfter(): void
     {
         /**
          * This error can only be triggered if no after() method has been set,
@@ -120,7 +119,7 @@ abstract class ModelFactory implements IModelFactory
         );
     }
 
-    private function registerState (ReflectionMethod $method): void
+    private function registerState(ReflectionMethod $method): void
     {
         $this->factory->state(
             $this->model,
@@ -129,7 +128,7 @@ abstract class ModelFactory implements IModelFactory
         );
     }
 
-    private function registerAfterState (ReflectionMethod $method): void
+    private function registerAfterState(ReflectionMethod $method): void
     {
         $state = Str::camel(
             str_replace(self::AFTER, '', $method->name)
@@ -142,7 +141,7 @@ abstract class ModelFactory implements IModelFactory
         );
     }
 
-    private function methods (): array
+    private function methods(): array
     {
         $reflector = new ReflectionClass(static::class);
 

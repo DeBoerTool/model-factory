@@ -16,7 +16,7 @@ class ModelFixture extends Model
 {
     protected $table = 'one';
 
-    public function relation (): BelongsTo
+    public function relation(): BelongsTo
     {
         return $this->belongsTo(
             RelationFixture::class,
