@@ -24,9 +24,9 @@ class Create
         /** @var EloquentFactory $factory */
         $factory = app(EloquentFactory::class);
 
-        $count = self::parseParams(new Count, $params);
-        $overrides = self::parseParams(new Overrides, $params);
-        $states = self::parseParams(new States, $params);
+        $count = self::parseParams(new Count(), $params);
+        $overrides = self::parseParams(new Overrides(), $params);
+        $states = self::parseParams(new States(), $params);
         $modelClass = get_class($model);
 
         /**

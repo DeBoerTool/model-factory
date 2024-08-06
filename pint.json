@@ -20,8 +20,8 @@
     },
     "single_line_empty_body": false,
     "new_with_parentheses": {
-      "anonymous_class": false,
-      "named_class": false
+      "anonymous_class": true,
+      "named_class": true
     },
     "single_trait_insert_per_statement": true
   }
