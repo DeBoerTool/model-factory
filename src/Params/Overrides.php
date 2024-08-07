@@ -7,12 +7,12 @@ class Overrides implements Param
     /** @var string[] */
     private $overrides;
 
-    public function __construct (array $overrides = [])
+    public function __construct(array $overrides = [])
     {
         $this->overrides = $overrides;
     }
 
-    public static function of (array $overrides): self
+    public static function of(array $overrides): self
     {
         return new self($overrides);
     }
@@ -20,7 +20,7 @@ class Overrides implements Param
     /**
      * @return array
      */
-    public function get ()
+    public function get()
     {
         return $this->overrides;
     }

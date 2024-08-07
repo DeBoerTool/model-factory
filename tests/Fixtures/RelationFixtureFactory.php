@@ -8,7 +8,7 @@ class RelationFixtureFactory extends ModelFactory
 {
     protected $model = RelationFixture::class;
 
-    public function definition (): array
+    public function definition(): array
     {
         return [
             'name' => $this->faker->sentence(3),

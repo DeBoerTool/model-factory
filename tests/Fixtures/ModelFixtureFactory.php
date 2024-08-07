@@ -23,10 +23,8 @@ class ModelFixtureFactory extends ModelFactory
 
     /**
      * This is the main factory definition.
-     *
-     * @return array
      */
-    public function definition (): array
+    public function definition(): array
     {
         // Calling another Model Factory.
         $model = $this->factory(RelationFixture::class)->create();
@@ -44,10 +42,8 @@ class ModelFixtureFactory extends ModelFactory
 
     /**
      * This method will be called after creating the model.
-     *
-     * @param  \Dbt\Tests\Fixtures\ModelFixture  $model
      */
-    public function after (ModelFixture $model): void
+    public function after(ModelFixture $model): void
     {
         $relation = $this->createOne(RelationFixture::class);
 
@@ -56,31 +52,29 @@ class ModelFixtureFactory extends ModelFactory
 
     /**
      * This is a factory state.
-     *
-     * @return array
      */
-    public function hasState (): array
+    public function hasState(): array
     {
         return [
             'state' => $this->faker->word,
         ];
     }
 
-    public function hasRandomStringState (): array
+    public function hasRandomStringState(): array
     {
         return [
             'state' => $this->rs(16),
         ];
     }
 
-    public function hasRandomIntState (): array
+    public function hasRandomIntState(): array
     {
         return [
             'state' => $this->ri(1, 1000),
         ];
     }
 
-    public function hasRandomFloatState (): array
+    public function hasRandomFloatState(): array
     {
         return [
             'state' => $this->rf(1, 1000),
@@ -89,10 +83,8 @@ class ModelFixtureFactory extends ModelFactory
 
     /**
      * This method will be called after creating the model with state.
-     *
-     * @param  \Dbt\Tests\Fixtures\ModelFixture  $model
      */
-    public function afterHasState (ModelFixture $model): void
+    public function afterHasState(ModelFixture $model): void
     {
         $model->state_after = $this->faker->word;
         $model->save();
@@ -102,10 +94,8 @@ class ModelFixtureFactory extends ModelFactory
      * State callbacks can be used without an accompanying factory state. This
      * callback will be called regardless of the fact that there's no
      * `hasMoreState` method.
-     *
-     * @param  \Dbt\Tests\Fixtures\ModelFixture  $model
      */
-    public function afterHasMoreState (ModelFixture $model): void
+    public function afterHasMoreState(ModelFixture $model): void
     {
         $model->state_after = $this->faker->word;
         $model->save();

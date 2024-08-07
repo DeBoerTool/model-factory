@@ -7,17 +7,17 @@ class Count implements Param
     /** @var int */
     private $value;
 
-    public function __construct (int $howMany = 1)
+    public function __construct(int $howMany = 1)
     {
         $this->value = $howMany;
     }
 
-    public static function of (int $howMany): self
+    public static function of(int $howMany): self
     {
         return new self($howMany);
     }
 
-    public static function rand (int $min = 2, int $max = 9): self
+    public static function rand(int $min = 2, int $max = 9): self
     {
         return new self(
             rand($min, $max)
@@ -31,7 +31,7 @@ class Count implements Param
      *
      * @return int|null
      */
-    public function get ()
+    public function get()
     {
         if ($this->value <= 1) {
             return null;

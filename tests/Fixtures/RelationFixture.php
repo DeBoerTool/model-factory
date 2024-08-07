@@ -9,7 +9,7 @@ class RelationFixture extends EloquentModel
 {
     protected $table = 'two';
 
-    public function test (): BelongsTo
+    public function test(): BelongsTo
     {
         return $this->belongsTo(ModelFixture::class, 'test_id');
     }

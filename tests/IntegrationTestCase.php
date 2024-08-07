@@ -13,7 +13,7 @@ abstract class IntegrationTestCase extends TestCase
     /** @var \Illuminate\Database\Schema\Builder */
     private $schema;
 
-    public function setUp (): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -26,7 +26,7 @@ abstract class IntegrationTestCase extends TestCase
         $this->migrateDatabase();
     }
 
-    protected function getEnvironmentSetUp ($app): void
+    protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('model-factory.classes', [
             ModelFixtureFactory::class,
@@ -36,20 +36,20 @@ abstract class IntegrationTestCase extends TestCase
         $app['config']->set('app.debug', 'true');
         $app['config']->set('database.default', 'testing');
         $app['config']->set('database.connections.testing', [
-            'driver'   => 'sqlite',
+            'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix'   => '',
+            'prefix' => '',
         ]);
     }
 
-    protected function getPackageProviders ($app): array
+    protected function getPackageProviders($app): array
     {
         return [
             ModelFactoryProvider::class,
         ];
     }
 
-    private function migrateDatabase (): void
+    private function migrateDatabase(): void
     {
         $this->schema->create('one', function (Blueprint $table) {
             $table->increments('id');

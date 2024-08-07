@@ -19,7 +19,7 @@ class Create
     /**
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection
      */
-    public static function a (Model $model, Param ...$params)
+    public static function a(Model $model, Param ...$params)
     {
         /** @var EloquentFactory $factory */
         $factory = app(EloquentFactory::class);
@@ -47,12 +47,12 @@ class Create
      *
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection
      */
-    public static function some (Model $model, Count $count, Param ...$params)
+    public static function some(Model $model, Count $count, Param ...$params)
     {
         return self::a($model, $count, ...$params);
     }
 
-    private static function parseParams (Param $default, array $args): Param
+    private static function parseParams(Param $default, array $args): Param
     {
         $class = get_class($default);
 
